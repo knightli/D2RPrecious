@@ -4,3 +4,9 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
+(function(){
+  document.getElementById('_win_btn_always_top').addEventListener("click", function(){
+    console.log('btn: _win_btn_always_top is clicked!');
+  })
+})();

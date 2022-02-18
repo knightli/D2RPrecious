@@ -7,17 +7,23 @@
     <link href="./styles.css" rel="stylesheet">
     <title>D2RPrecious</title>
   </head>
-  <body>
-    <h1>Hello World!</h1>
+  <body style="background-color: #fff;">
+
+    <header>
+      <div class="title-bar-flow-btns" style="-webkit-app-region: no-drag">
+        <button id="_win_btn_always_top">top</button>
+      </div>
+      <div class="title-bar" style="-webkit-app-region: drag">
+        <span class="title-window-name">Title</span>
+      </div>
+    </header>
 
     <p>electron app for D2 treature hunter!</p>
 
     <hr>
-
     We are using Node.js <span id="node-version"></span>,
     Chromium <span id="chrome-version"></span>,
     and Electron <span id="electron-version"></span>.
-
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
   </body>
