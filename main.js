@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu } = require('electron')
+const { ipcMain } = require('electron')
 const path = require('path')
 
 function createWindow() {
@@ -13,7 +14,12 @@ function createWindow() {
     skipTaskbar: true,
     center: true,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: true, // Electron 10 deprecate nodeIntegration flag (removed in Electron 12)
+      contextIsolation: false, // protect against prototype pollution
+      // enableRemoteModule: false, // turn off remote
+      // nodeIntegrationInWorker: false,
+      // nodeIntegrationInSubFrames: false,
+      // sandbox: true,
       webviewTag: true,
       preload: path.join(__dirname, 'preload.js')
     }
@@ -46,6 +52,12 @@ function createWindow() {
       ]).popup(mainWindow);
     });
   }
+
+  ipcMain.on('close-win', () => {
+    if (mainWindow) {
+      mainWindow.destroy()
+    }
+  })
 
 }
 
