@@ -33,6 +33,12 @@ function createWindow() {
             mainWindow.inspectElement(x, y);
           },
         },
+        {
+          label: 'Refresh',
+          click() {
+            mainWindow.webContents.reloadIgnoringCache();
+          },
+        },
       ]).popup(mainWindow);
     });
   }
