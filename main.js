@@ -30,7 +30,11 @@ function createWindow() {
         {
           label: 'Inspect element',
           click() {
-            mainWindow.inspectElement(x, y);
+            if (mainWindow.webContents.isDevToolsOpened()) {
+              mainWindow.webContents.closeDevTools();
+            } else {
+              mainWindow.inspectElement(x, y);
+            }
           },
         },
         {
