@@ -59,6 +59,31 @@ function createWindow() {
     }
   })
 
+  mainWindow.on('always-on-top-changed', (e, isAlwaysOnTop) => {
+    mainWindow.webContents.send('always-on-top-changed', isAlwaysOnTop)
+  })
+
+  ipcMain.on('is-top', () => {
+    if (mainWindow) {
+      let isTop = mainWindow.isAlwaysOnTop()
+      mainWindow.webContents.send('is-top', isTop)
+    }
+  })
+
+  ipcMain.on('enable-top', () => {
+    if (mainWindow) {
+      mainWindow.setAlwaysOnTop(true)
+    }
+  })
+
+  ipcMain.on('disable-top', () => {
+    if (mainWindow) {
+      mainWindow.setAlwaysOnTop(false)
+    }
+  })
+
+
+
 }
 
 // This method will be called when Electron has finished

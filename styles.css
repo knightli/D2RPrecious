@@ -42,6 +42,13 @@ a:hover {
   cursor: pointer;
 }
 
+button {
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  outline: none;
+}
+
 /* ======  app style ====== */
 
 .title-bar{
@@ -61,4 +68,9 @@ a:hover {
   position: relative;
   right: 5px;
   top: 5px;
+  height: 20px;
+  width: 20px;
+}
+.is-top{
+  background-color: rgb(237 241 0);
 }
