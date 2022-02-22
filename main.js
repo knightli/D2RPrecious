@@ -6,13 +6,15 @@ const path = require('path')
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 400,
+    width: 300,
     height: 600,
     frame: false,
     fullscreenable: false,
-    transparent: true,
+    //transparent: true,
+    opacity: 0.9,
     skipTaskbar: true,
     center: true,
+    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true, // Electron 10 deprecate nodeIntegration flag (removed in Electron 12)
       contextIsolation: false, // protect against prototype pollution
@@ -53,36 +55,42 @@ function createWindow() {
     });
   }
 
-  ipcMain.on('close-win', () => {
-    if (mainWindow) {
-      mainWindow.destroy()
-    }
+  ipcMain.on('close-win', (event, ...args) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    win.destroy()
   })
 
   mainWindow.on('always-on-top-changed', (e, isAlwaysOnTop) => {
     mainWindow.webContents.send('always-on-top-changed', isAlwaysOnTop)
   })
 
-  ipcMain.on('is-top', () => {
-    if (mainWindow) {
-      let isTop = mainWindow.isAlwaysOnTop()
-      mainWindow.webContents.send('is-top', isTop)
-    }
+  ipcMain.on('is-top', (event, ...args) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    let isTop = win.isAlwaysOnTop()
+    win.webContents.send('is-top', isTop)
   })
 
-  ipcMain.on('enable-top', () => {
-    if (mainWindow) {
-      mainWindow.setAlwaysOnTop(true)
-    }
+  ipcMain.on('enable-top', (event, ...args) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    let isTop = win.isAlwaysOnTop()
+    win.setAlwaysOnTop(true)
   })
 
-  ipcMain.on('disable-top', () => {
-    if (mainWindow) {
-      mainWindow.setAlwaysOnTop(false)
-    }
+  ipcMain.on('disable-top', (event, ...args) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    let isTop = win.isAlwaysOnTop()
+    win.setAlwaysOnTop(false)
   })
 
+  ipcMain.on('set-ignore-mouse-events', (event, ...args) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    win.setIgnoreMouseEvents(...args)
+  })
 
+  ipcMain.on('set-opacity', (event, ...args) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    win.setOpacity(...args)
+  })
 
 }
 
